@@ -140,5 +140,5 @@ C:\temp
 
 *AUTHOR
 
-Michaël Militoni @ NRB
+Michaël Militoni
 #>
