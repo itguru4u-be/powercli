@@ -1,4 +1,5 @@
-﻿function Snapshot-hunter{
+#snapshot hunter function
+function Snapshot-hunter{
 Try{
 Connect-VIServer $vcenter -ErrorAction Stop
 }
@@ -9,11 +10,13 @@ pause
 Write-Host "Please Restart the script" -ForegroundColor Red
 start-sleep -Seconds 5
 break
-} 
+}
+# variables
 $PathReport="C:\temp\snapshot_hunter"
 $Report="C:\temp\snapshot_hunter\$(Get-Date -Format ddMMyyyy)snapshot_report.txt"
 $String="*" * 16
 
+#check and create report folder
 Write-host "Checking if report folder is present...loading" -ForegroundColor Cyan -BackgroundColor Black
 Start-Sleep -Seconds 3
 if (Test-Path -Path $PathReport) {
@@ -25,6 +28,7 @@ write-host "Report Folder Created - $PathReport" -ForegroundColor Red -Backgroun
 Start-Sleep -Seconds 3
 }
 
+#check if a a report already exists. It asks you to delete or archive it.The script creates a new one
 Write-host "Checking if existing snapshot report is present...loading" -ForegroundColor Cyan -BackgroundColor Black
 Start-Sleep -Seconds 3
 
@@ -47,6 +51,7 @@ Write-Output "Snapshot Report" | Out-File -FilePath $Report -Append
 Write-Output  $String | Out-File -FilePath $Report -Append
 }
 
+#Investigates the datastores specified by the users by looking for VM snapshots and opens the report
 Write-host "Select datastore you want to inspect...loading" -ForegroundColor Cyan -BackgroundColor Black
 Start-Sleep -Seconds 3
 $targetDS=Get-Datastore | Out-GridView -PassThru
@@ -57,15 +62,19 @@ Disconnect-VIServer -Server $vcenter -Confirm:$false
 Write-Host "Thanks for using Snapshot Hunter! Bye" -ForegroundColor Red -BackgroundColor White
 pause
 }
+#end of the function
 
+#start of the script
 Write-host "Welcome in Snapshot Hunter - Identify & report VM snapshot" -ForegroundColor DarkGreen -BackgroundColor White
 pause
 
+#loop for confirming input before launching loaded function
 DO
 {$vcenter=Read-host "Please type the FQDN of the vCenter you want to connect to"
 $confirmation=Read-host "Please confirm that you want to connect to $vcenter y/n"
 }
 until ($confirmation -eq "y")
+#launch of the function
 Snapshot-hunter
 
 <#
