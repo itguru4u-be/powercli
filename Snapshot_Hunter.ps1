@@ -95,8 +95,7 @@ The user of the script will receive a report in text format of the supicious dat
 
 This script is designed as follow
 Part 1. A function is created to launch the report about the specific datastores you want to analyze
-Part 2. A second function is created to launch the report about the specific datastores you want to analyze after checking the content of the local report folder
-Part 3. A loop that permits to manage user inputs errors when the vcenter name is not the one expected one. Ex: User is aware of a typo error
+Part 2. A loop that permits to manage user inputs errors when the vcenter name is not the one expected one. Ex: User is aware of a typo error
 Part 3. A call of the function is realized to create the report 
 
 This script has no impact on vSphere environment as it retreives data only ( no modification on the infrastructure)
@@ -109,9 +108,9 @@ This script has no impact on vSphere environment as it retreives data only ( no 
 
 .OUTPUTS
 --------
-The output of the script is the creation of a text file in the following location "C:\Temp". 
+The output of the script is the creation of a text file in the following location "C:\temp\snapshot_hunter". 
 The script will create the folder to store the report if it doesn't exist
-The name of the file is: snapshot_report.txt
+The name of the file is: $(Get-Date -Format ddMMyyyy)snapshot_report.txt -> Currentdatesnapshot_report.txt
 
 For each snapshot found, the report will add the following information:
 VM Name (concerned VM)
@@ -119,6 +118,7 @@ Creation date of the snapshot
 Description (if completed)
 Verification if the found snapshot is the current one or if is member of a chain
 Size of the Snapshot expressed in GB and rounded to MB
+Name of datastore(s) analyzed
 
 
 .NOTES
@@ -126,7 +126,8 @@ Size of the Snapshot expressed in GB and rounded to MB
 
 *VERSION
 
-Current version is v1.0 (15/07/2021)
+Current version is v1.1 (22/07/2021)
+reviewed the code to get a better workflow of the script
 
 *PREREQUISITE
 
@@ -135,7 +136,7 @@ PowerCLI module 6.5 minimum present on your machine where you run the tool
 *LIMITATION
 
 The machine where will be run the script must be a Windows machine as a report will be created in the following folder:
-C:\temp
+"C:\temp\snapshot_hunter"
 
 *AUTHOR
 
